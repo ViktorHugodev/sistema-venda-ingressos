@@ -22,7 +22,7 @@ export class SpotsController {
 
   @Get()
   findAll() {
-    return this.spotsService.findAll();
+    // return this.spotsService.findAll();
   }
 
   @Get(':id')
