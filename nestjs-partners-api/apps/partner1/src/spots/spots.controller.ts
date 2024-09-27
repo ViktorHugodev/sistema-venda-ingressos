@@ -7,12 +7,12 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { SpotsService } from './spots.service';
-import { CreateSpotDto } from './dto/create-spot.dto';
-import { UpdateSpotDto } from './dto/update-spot.dto';
-import { SpotStatus } from '@prisma/client';
 
-type CreateSpotInput = CreateSpotDto & { eventId: string };
+import { SpotsService } from '@app/core/spots/spots.service';
+import { CreateSpotRequest } from './request/create-spot-request.dto';
+import { UpdateSpotRequest } from './request/update-spot-request.dto';
+
+type CreateSpotInput = CreateSpotRequest & { eventId: string };
 
 @Controller('events/:eventId/spots')
 export class SpotsController {
@@ -43,7 +43,7 @@ export class SpotsController {
   update(
     @Param('id') spotId: string,
     @Param('eventId') eventId: string,
-    @Body() updateSpotDto: UpdateSpotDto,
+    @Body() updateSpotDto: UpdateSpotRequest,
   ) {
     return this.spotsService.update(spotId, eventId, updateSpotDto);
   }
