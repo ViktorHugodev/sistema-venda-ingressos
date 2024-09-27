@@ -43,7 +43,7 @@ export class EventsService {
     });
   }
 
-  async reserve(dto: ReserveSpotDto & { eventId: string }) {
+  async reserveSpot(dto: ReserveSpotDto & { eventId: string }) {
     const spots = await this.prismaService.spot.findMany({
       where: {
         eventId: dto.eventId,

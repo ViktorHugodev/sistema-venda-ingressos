@@ -6,10 +6,10 @@ POST http://localhost:3000/events
 Content-Type: application/json
 
 {
-    "name": "New time, novos events",
+    "name": "Sexta 27",
     "description": "This is a new test event",
-    "date": "2017-01-01T00:00:00",
-    "price": 4000
+    "date": "2024-01-01T00:00:00",
+    "price": 100
 }
 
 ###
@@ -23,9 +23,9 @@ PATCH http://localhost:3000/events/{{eventId}}
 Content-Type: application/json
 
 {
-    "name": "New name",
+    "name": "Sexta 27",
     "description": "This is a new event updated",
-    "date": "2017-01-01T00:00:00",
+    "date": "2024-08-08T00:00:00",
     "price": 120
 }
 
@@ -40,5 +40,20 @@ POST http://localhost:3000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "A2"
+    "name": "A3"
+}
+
+
+###
+@spotName = {{ createSpot.response.body.name }}
+
+###
+POST http://localhost:3000/events/{{eventId}}/reserve
+Content-Type: application/json
+X-Api-Token: 1234
+
+{
+  "spots": ["A3"],
+  "ticket_kind": "half",
+  "email": "test@test.com"
 }
