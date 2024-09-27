@@ -3,6 +3,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ReserveSpotDto } from './dto/reserve-spot.dto';
+import { SpotStatus, TicketStatus } from '@prisma/client';
 
 @Injectable()
 export class EventsService {
@@ -51,6 +52,7 @@ export class EventsService {
         },
       },
     });
+
     if (spots.length !== dto.spots.length) {
       const foundSpotName = spots.map((spot) => spot.name);
       const notFoundSpotName = dto.spots.filter(
@@ -58,5 +60,39 @@ export class EventsService {
       );
       throw new Error(`Spots ${notFoundSpotName.join(', ')} not found`);
     }
+
+    await this.prismaService.reservationHistory.createMany({
+      data: spots.map((spot) => ({
+        spotId: spot.id,
+        email: dto.email,
+        ticketKind: dto.ticket_kind,
+        status: TicketStatus.reserved,
+      })),
+    });
+
+    await this.prismaService.spot.updateMany({
+      where: {
+        id: {
+          in: spots.map((spot) => spot.id),
+        },
+      },
+      data: {
+        status: SpotStatus.reserved,
+      },
+    });
+
+    const tickets = await Promise.all(
+      spots.map((spot) => {
+        this.prismaService.ticket.create({
+          data: {
+            spotId: spot.id,
+            ticketKind: dto.ticket_kind,
+            email: dto.email,
+          },
+        });
+      }),
+    );
+
+    return tickets;
   }
 }
