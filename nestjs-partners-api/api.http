@@ -1,8 +1,8 @@
-GET http://localhost:3000/events
+GET http://localhost:3001/events
 
 ### Post Event
 # @name createEvent
-POST http://localhost:3000/events
+POST http://localhost:3001/events
 Content-Type: application/json
 
 {
