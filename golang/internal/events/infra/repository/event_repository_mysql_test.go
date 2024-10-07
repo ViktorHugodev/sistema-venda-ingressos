@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/devfullcycle/imersao18/golang/internal/events/domain"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
 )
 
 var db *sql.DB

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/devfullcycle/imersao18/golang/internal/events/usecase"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/usecase"
 )
 
 // EventsHandler handles HTTP requests for events.

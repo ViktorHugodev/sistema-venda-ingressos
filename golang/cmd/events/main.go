@@ -12,12 +12,12 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	_ "github.com/devfullcycle/imersao18/golang/docs" // Import the generated docs
-	httpHandler "github.com/devfullcycle/imersao18/golang/internal/events/infra/http"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/repository"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/service"
-	"github.com/devfullcycle/imersao18/golang/internal/events/usecase"
 	httpSwagger "github.com/swaggo/http-swagger"
+	_ "github.com/viktorhugodev/sistema-venda-ingressos/golang/docs" // Import the generated docs
+	httpHandler "github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/http"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/repository"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/service"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/usecase"
 )
 
 // @title Events API

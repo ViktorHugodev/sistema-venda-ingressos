@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/devfullcycle/imersao18/golang/internal/events/domain"
 	"github.com/stretchr/testify/mock"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
 )
 
 type MockEventRepository struct {

@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/devfullcycle/imersao18/golang/internal/events/domain"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/repository"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/repository"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/service"
 )
 
 type MockPartnerService struct {

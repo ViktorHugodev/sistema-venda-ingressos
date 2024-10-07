@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/devfullcycle/imersao18/golang/internal/events/domain"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/service"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/infra/service"
 )
 
 type BuyTicketsInputDTO struct {
