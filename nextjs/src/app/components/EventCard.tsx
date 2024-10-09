@@ -1,7 +1,6 @@
 import Link from 'next/link'
-
-import Image from 'next/image'
 import { EventImage } from './EventImage'
+import { EventModel } from '@/models'
 
 export type EventCardProps = {
   event: EventModel
