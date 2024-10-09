@@ -25,7 +25,7 @@ const config: Config = {
         subtitle: '#7480FF',
       },
       gridTemplateColumns: {
-        // "auto-fit-cards": "repeat(auto-fit, minmax(277px, 1fr))",
+        'auto-fit-cards': 'repeat(auto-fit, minmax(277px, 1fr))',
       },
     },
   },

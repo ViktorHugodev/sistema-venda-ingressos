@@ -4,7 +4,7 @@ export type EventModel = {
   organization: string
   date: string
   price: number
-  rating: string
+  // rating: string
   image_url: string
   location: string
 }
