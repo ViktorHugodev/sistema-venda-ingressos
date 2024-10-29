@@ -1,12 +1,12 @@
-GET http://localhost:3001/events
+GET http://localhost:3000/events
 
 ### Post Event
 # @name createEvent
-POST http://localhost:3001/events
+POST http://localhost:3000/events
 Content-Type: application/json
 
 {
-    "name": "Sexta 27",
+    "name": "Sexta 2222",
     "description": "This is a new test event",
     "date": "2024-01-01T00:00:00",
     "price": 100
@@ -40,7 +40,7 @@ POST http://localhost:3000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "A3"
+    "name": "A5"
 }
 
 
@@ -50,10 +50,10 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/events/{{eventId}}/reserve
 Content-Type: application/json
-X-Api-Token: 1234
+X-Api-Token: 123
 
 {
-  "spots": ["A3"],
+  "spots": ["A5"],
   "ticket_kind": "half",
   "email": "test@test.com"
 }

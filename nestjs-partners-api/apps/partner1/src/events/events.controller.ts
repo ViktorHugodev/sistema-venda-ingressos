@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CreateEventRequest } from './request/create-event-request.dto';
 import { UpdateEventRequest } from './request/update-event-request.dto';
 import { ReserveSpotRequest } from './request/reserve-spot-request.dto';
 import { EventsService } from '@app/core/events/events.service';
+import { AuthGuard } from '@app/core/auth/auth.guard';
 
 @Controller('events')
 export class EventsController {
@@ -41,7 +43,7 @@ export class EventsController {
   remove(@Param('id') id: string) {
     return this.eventsService.remove(id);
   }
-
+  @UseGuards(AuthGuard)
   @Post(':id/reserve')
   reserveSpots(@Body() dto: ReserveSpotRequest, @Param('id') eventId: string) {
     return this.eventsService.reserveSpot({ ...dto, eventId });

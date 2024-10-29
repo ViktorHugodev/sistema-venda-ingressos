@@ -4,7 +4,7 @@ import { EventModel } from '../../models'
 import { Title } from '../components/Title'
 
 export async function getEvent(eventId: string): Promise<EventModel> {
-  const response = await fetch(`http://localhost:8080/events/${eventId}`, {
+  const response = await fetch(`http://localhost:3000/events/${eventId}`, {
     cache: 'no-store',
     next: {
       tags: [`events/${eventId}`],
@@ -17,6 +17,8 @@ export async function getEvent(eventId: string): Promise<EventModel> {
 export default async function CheckoutPage() {
   const cookiesStore = cookies()
   const eventId = cookiesStore.get('eventId')?.value
+  console.warn('🚀 ~ file: page.tsx:20 ~ CheckoutPage ~ eventId:', eventId)
+
   if (!eventId) {
     return redirect('/')
   }
