@@ -12,6 +12,7 @@ export default async function HomePage() {
       price: 99,
       location: 'Montes Claros',
       image_url: '',
+      rating: '5.5',
     },
     {
       id: '1',
@@ -21,6 +22,7 @@ export default async function HomePage() {
       price: 99,
       location: 'Montes Claros',
       image_url: '',
+      rating: '5.5',
     },
     {
       id: '1',
@@ -30,6 +32,7 @@ export default async function HomePage() {
       price: 99,
       location: 'Montes Claros',
       image_url: '',
+      rating: '5.5',
     },
   ]
   console.log(events)

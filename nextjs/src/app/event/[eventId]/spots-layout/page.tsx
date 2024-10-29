@@ -6,6 +6,7 @@ import { cookies } from 'next/headers'
 import { EventImage } from '@/app/components/EventImage'
 import { Title } from '@/app/components/Title'
 import { SpotSeat } from '@/app/components/SpotSeat'
+import { TicketKindSelect } from './TicketKindSelect'
 
 export async function getSpots(eventId: string): Promise<{
   event: EventModel
@@ -22,8 +23,23 @@ export async function getSpots(eventId: string): Promise<{
 }
 
 export default async function SpotsLayoutPage({ params }: { params: { eventId: string } }) {
-  const { event, spots } = await getSpots(params.eventId)
-
+  // const { event, spots } = await getSpots(params.eventId)
+  const event = {
+    id: '1',
+    name: 'Copa do Mundo 2024',
+    organization: 'Copa do Mundo',
+    date: '2024-10-30',
+    price: 250,
+    location: 'Montes Claros',
+    image_url: '',
+    rating: '5.5',
+  }
+  const spots = [
+    {
+      name: 'A1',
+      status: 'available',
+    },
+  ]
   //[a, a, a, b, b,  c, d]
   const rowLetters = spots.map(spot => spot.name[0])
 
@@ -148,10 +164,7 @@ export default async function SpotsLayoutPage({ params }: { params: { eventId: s
             Meia-entrada: {`R$ 50,00`}
           </p>
           <div className='flex flex-col'>
-            {/* <TicketKindSelect
-              defaultValue={ticketKind as any}
-              price={event.price}
-            /> */}
+            <TicketKindSelect defaultValue={ticketKind as 'full' | 'half'} price={event.price} />
           </div>
           <div>Total: {formattedTotalPrice}</div>
           <Link
