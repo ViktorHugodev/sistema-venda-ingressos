@@ -1,6 +1,7 @@
 ###
 GET http://localhost:8000/partner1/events
 
+
 ###
 GET http://localhost:8000/partner2/events
 

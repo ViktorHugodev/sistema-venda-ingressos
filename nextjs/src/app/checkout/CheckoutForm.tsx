@@ -2,8 +2,13 @@
 
 import { checkoutAction } from '@/actions'
 import { PropsWithChildren } from 'react'
-
-export async function getCardHash({ cardName, cardNumber, expireDate, cvv }) {
+interface GetCardHashProps {
+  cardName: string
+  cardNumber: string
+  expireDate: string
+  cvv: string
+}
+export async function getCardHash({ cardName, cardNumber, expireDate, cvv }: GetCardHashProps) {
   return Math.random().toString(36).substring(7)
 }
 
