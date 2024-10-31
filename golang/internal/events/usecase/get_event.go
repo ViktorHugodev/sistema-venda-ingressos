@@ -1,6 +1,8 @@
 package usecase
 
-import "github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
+import (
+	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/domain"
+)
 
 type GetEventInputDTO struct {
 	ID string
