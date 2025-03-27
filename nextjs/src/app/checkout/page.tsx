@@ -5,12 +5,13 @@ import { Title } from '../components/Title'
 import { CheckoutForm } from './CheckoutForm'
 
 export async function getEvent(eventId: string): Promise<EventModel> {
-  const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${eventId}`, {
     cache: 'no-store',
     next: {
-      tags: [`events/${eventId}`],
-    },
+      tags: [`events/${eventId}`]
+    }
   })
+  console.log('🚀 ~ file: page.tsx:10 ~ getEvent ~ response:', response)
 
   return response.json()
 }
