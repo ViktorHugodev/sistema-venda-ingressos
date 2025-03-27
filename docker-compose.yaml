@@ -3,3 +3,8 @@ include:
   - nestjs-partners-api/docker-compose.yaml
   - nextjs/docker-compose.yaml
   - kong-api-gateway/docker-compose.with-dbless.yaml
+
+networks:
+  # Para garantir que todos os serviços possam se comunicar
+  default:
+    driver: bridge

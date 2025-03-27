@@ -1,10 +1,19 @@
 services:
-
   nextjs:
     build: .
+    container_name: sistema-venda-ingressos-nextjs-1
     ports:
-      - 3002:3000
+      - "3002:3000"
     volumes:
       - .:/home/node/app
+      - /home/node/app/node_modules
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - nextjs-network
+      - default
+    command: npm run dev
+
+networks:
+  nextjs-network:
+    driver: bridge

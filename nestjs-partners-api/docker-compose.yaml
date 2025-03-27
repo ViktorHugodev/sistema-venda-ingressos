@@ -1,17 +1,56 @@
 services:
-  app:
-    build: .
-    ports:
-      - 3000:3000
-      - 3001:3001
-    volumes:
-      - .:/home/node/app
-
-  db:
-    image: mysql:latest
+  nestjs-mysql:
+    image: mysql:8.0.30-debian
+    container_name: nestjs-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: partners_db
     ports:
-      - 3306:3306
+      - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     volumes:
       - ./.docker/mysql:/docker-entrypoint-initdb.d
+      - nestjs-mysql-data:/var/lib/mysql
+    networks:
+      - partners-network
+      - default
+
+  partners-api:
+    build: .
+    container_name: partners-api
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    depends_on:
+      nestjs-mysql:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mysql://root:root@nestjs-mysql:3306/partners_db
+      - PORT_PARTNER1=3000
+      - PORT_PARTNER2=3001
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - partners-network
+      - default
+    command: >
+      sh -c "
+        npx prisma generate &&
+        npx prisma migrate deploy &&
+        npx prisma db seed &&
+        npm run start:dev
+      "
+
+volumes:
+  nestjs-mysql-data:
+
+networks:
+  partners-network:
+    driver: bridge

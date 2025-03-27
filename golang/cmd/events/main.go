@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -20,18 +21,54 @@ import (
 	"github.com/viktorhugodev/sistema-venda-ingressos/golang/internal/events/usecase"
 )
 
+func getEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+
 // @title Events API
 // @version 1.0
 // @description This is a server for managing events. Imersão Full Cycle
 // @host localhost:8080
 // @BasePath /
 func main() {
-	// Configuração do banco de dados
-	db, err := sql.Open("mysql", "test_user:test_password@tcp(golang-mysql:3306)/test_db")
+	// Configuração do banco de dados usando variáveis de ambiente
+	dbUser := getEnv("DB_USER", "test_user")
+	dbPassword := getEnv("DB_PASSWORD", "test_password")
+	dbHost := getEnv("DB_HOST", "golang-mysql")
+	dbPort := getEnv("DB_PORT", "3306")
+	dbName := getEnv("DB_NAME", "test_db")
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
+	log.Printf("Conectando ao banco de dados: %s", dsn)
+
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	// Adicionar verificação de conexão
+	err = db.Ping()
+	if err != nil {
+		log.Printf("Erro ao conectar ao banco de dados: %v. Tentando novamente...", err)
+		// Tentativas de reconexão
+		for i := 0; i < 30; i++ {
+			time.Sleep(2 * time.Second)
+			err = db.Ping()
+			if err == nil {
+				log.Println("Conectado ao banco de dados com sucesso após tentativas.")
+				break
+			}
+			log.Printf("Tentativa %d falhou: %v", i+1, err)
+		}
+		if err != nil {
+			log.Fatalf("Não foi possível conectar ao banco de dados após várias tentativas: %v", err)
+		}
+	}
 
 	// Repositório
 	eventRepo, err := repository.NewMysqlEventRepository(db)

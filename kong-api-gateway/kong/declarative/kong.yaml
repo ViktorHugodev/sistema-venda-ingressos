@@ -3,32 +3,64 @@ _transform: true
 
 services:
   - name: golang-api
-    url: http://host.docker.internal:8080
+    url: http://golang-api:8080
     routes:
       - name: golang-api-route
         paths:
-          - /api/events
+          - /api
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"
+          methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          headers:
+            - Content-Type
+            - Authorization
+          credentials: true
+          max_age: 3600
     
   - name: partner1-api
-    url: http://host.docker.internal:3000
+    url: http://partners-api:3000
     routes:
       - name: partner1-route
         paths:
           - /partner1
         strip_path: true
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"
     
   - name: partner2-api
-    url: http://host.docker.internal:3001
+    url: http://partners-api:3001
     routes:
       - name: partner2-route
         paths:
           - /partner2
         strip_path: true
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"
     
   - name: nextjs-frontend
-    url: http://host.docker.internal:3002
+    url: http://sistema-venda-ingressos-nextjs-1:3000
     routes:
       - name: frontend-route
         paths:
           - /
         strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"

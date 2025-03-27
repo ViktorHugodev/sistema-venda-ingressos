@@ -1,4 +1,4 @@
-.PHONY: all clean swag init run
+.PHONY: all build clean docker docker-up docker-down swag run
 
 # Diretórios
 SWAGGER_DIR = ./docs
@@ -15,20 +15,15 @@ DB_HOST = localhost
 DB_PORT = 3306
 DB_NAME = test_db
 
-all: swag build run
+all: clean swag build
 
 # Limpa os arquivos gerados
 clean:
-	rm -rf $(SWAGGER_DIR)
 	rm -f $(BINARY_NAME)
 
 # Gera os arquivos do Swagger
 swag:
 	swag init --output docs --dir ./cmd/events,./internal/events/infra/http,./internal/events/usecase
-
-# Inicializa o banco de dados (se necessário)
-init:
-	mysql -u$(DB_USER) -p$(DB_PASSWORD) -h$(DB_HOST) -P$(DB_PORT) -e "CREATE DATABASE IF NOT EXISTS $(DB_NAME);"
 
 # Compila o código
 build:
@@ -38,5 +33,20 @@ build:
 run: build
 	./$(BINARY_NAME)
 
-# Comando para facilitar o desenvolvimento (gera swagger, compila e executa)
-dev: swag build run
+# Docker
+docker:
+	docker-compose build
+
+docker-up:
+	docker-compose up -d
+
+docker-down:
+	docker-compose down
+
+# Reinicia apenas o serviço Golang sem afetar o banco de dados
+docker-restart-golang:
+	docker-compose restart golang
+
+# Testes
+test:
+	go test ./...

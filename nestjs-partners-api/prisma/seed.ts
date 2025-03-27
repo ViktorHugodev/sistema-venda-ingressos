@@ -1,13 +1,13 @@
-import {
-  PrismaClient,
-  SpotStatus,
-  TicketKind,
-  TicketStatus,
-} from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 const prisma = new PrismaClient();
+
+// Definindo os enums manualmente se não forem exportados pelo Prisma
+type SpotStatus = 'available' | 'reserved';
+type TicketKind = 'full' | 'half';
+type TicketStatus = 'reserved' | 'canceled';
 
 async function main() {
   // Dados de eventos com nomes e descrições reais
@@ -22,16 +22,6 @@ async function main() {
     'Art & Wine Festival',
     'Youth Coding Bootcamp',
     'Gaming Expo',
-    'Film Screening Night',
-    'Community Volunteer Day',
-    'Crypto & Blockchain Workshop',
-    'Fashion Runway',
-    'Book Launch Event',
-    'Digital Marketing Meetup',
-    'Summer Concert Series',
-    'Comedy Stand-Up Show',
-    'Photography Workshop',
-    'Culinary Masterclass',
   ];
 
   const eventDescriptions = [
@@ -45,68 +35,56 @@ async function main() {
     'Celebrate art, wine, and local crafts in this outdoor festival.',
     'An intensive coding workshop for young learners to develop fundamental programming skills.',
     'The latest in gaming tech, demos, and esports competitions all under one roof.',
-    'A screening of independent films, followed by a Q&A with the directors.',
-    'A day for community members to give back through various volunteer projects.',
-    'A hands-on workshop diving into the basics of crypto and blockchain technology.',
-    'An evening of fashion, featuring the latest designs on a live runway.',
-    'The launch of a highly anticipated book, with a reading and author meet-and-greet.',
-    'Network with marketers and learn about the latest in digital advertising strategies.',
-    'An open-air concert series featuring popular bands and solo artists all summer long.',
-    'Laugh out loud with top comedians in this special stand-up comedy show.',
-    'A photography workshop covering fundamentals and creative shooting techniques.',
-    'A cooking class with top chefs, focusing on gourmet dishes and plating skills.',
   ];
 
-  // Cria 20 eventos com spots e histórico de reservas
-  for (let i = 0; i < 20; i++) {
+  // Criar eventos para o Partner 1 (5 eventos)
+  for (let i = 0; i < 5; i++) {
     await prisma.event.create({
       data: {
-        name: eventNames[i],
+        name: `${eventNames[i]} (Partner 1)`,
         description: eventDescriptions[i],
         date: new Date(new Date().setDate(new Date().getDate() + i * 10)),
-        price: parseFloat((Math.random() * 100 + 10).toFixed(2)),
+        price: parseFloat((Math.random() * 100 + 50).toFixed(2)),
         Spot: {
-          create: Array.from({
-            length: Math.floor(Math.random() * 10 + 5),
-          }).map((_, j) => ({
-            name: `Spot ${j + 1} for ${eventNames[i]}`,
-            status: j % 2 === 0 ? SpotStatus.available : SpotStatus.reserved,
-            Ticket:
-              j % 2 === 1
-                ? {
-                    create: {
-                      email: `user${Math.floor(Math.random() * 100)}@example.com`,
-                      ticketKind:
-                        j % 3 === 0 ? TicketKind.full : TicketKind.half,
-                    },
-                  }
-                : undefined,
-            ReservationHistory: {
-              create:
-                j % 2 === 1
-                  ? [
-                      {
-                        email: `user${Math.floor(Math.random() * 100)}@example.com`,
-                        ticketKind:
-                          j % 3 === 0 ? TicketKind.full : TicketKind.half,
-                        status:
-                          j % 4 === 0
-                            ? TicketStatus.canceled
-                            : TicketStatus.reserved,
-                      },
-                    ]
-                  : [],
-            },
+          create: Array.from({ length: 10 }).map((_, j) => ({
+            name: `${String.fromCharCode(65 + Math.floor(j / 5))}${(j % 5) + 1}`,
+            status:
+              j % 3 === 0
+                ? ('reserved' as SpotStatus)
+                : ('available' as SpotStatus),
           })),
         },
       },
     });
   }
+
+  // Criar eventos para o Partner 2 (5 eventos)
+  for (let i = 5; i < 10; i++) {
+    await prisma.event.create({
+      data: {
+        name: `${eventNames[i]} (Partner 2)`,
+        description: eventDescriptions[i],
+        date: new Date(new Date().setDate(new Date().getDate() + i * 10)),
+        price: parseFloat((Math.random() * 150 + 75).toFixed(2)),
+        Spot: {
+          create: Array.from({ length: 10 }).map((_, j) => ({
+            name: `${String.fromCharCode(65 + Math.floor(j / 5))}${(j % 5) + 1}`,
+            status:
+              j % 4 === 0
+                ? ('reserved' as SpotStatus)
+                : ('available' as SpotStatus),
+          })),
+        },
+      },
+    });
+  }
+
+  console.log('Seed executado com sucesso!');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('Erro ao executar seed:', e);
     process.exit(1);
   })
   .finally(async () => {

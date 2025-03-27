@@ -1,17 +1,7 @@
 services:
-
-  golang:
-    build: .
-    ports:
-      - "8080:8080"
-    volumes:
-      - .:/app
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
   golang-mysql:
     image: mysql:8.0.30-debian
-    #container_name: test-mysql
+    container_name: golang-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test_db
@@ -26,17 +16,36 @@ services:
       retries: 3
     volumes:
       - ./mysql-init:/docker-entrypoint-initdb.d
+      - golang-mysql-data:/var/lib/mysql
+    networks:
+      - events-network
+      - default
 
+  golang:
+    build: .
+    container_name: golang-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      golang-mysql:
+        condition: service_healthy
+    environment:
+      - DB_HOST=golang-mysql
+      - DB_PORT=3306
+      - DB_USER=test_user
+      - DB_PASSWORD=test_password
+      - DB_NAME=test_db
+    # Volumes removidos para evitar sobrescrever o binário compilado
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - events-network
+      - default
+    restart: on-failure
 
-# C:\Windows\system32\drivers\etc\hosts (bloco de notas em modo administrador)
+volumes:
+  golang-mysql-data:
 
-# 127.0.0.1 host.docker.internal
-
-## Linux ou Mac (Docker Desktop)
-
-# /etc/hosts
-
-# 127.0.0.1 host.docker.internal
-
-# host.docker.internal:8000/partner1
-# host.docker.internal:8000/partner2
+networks:
+  events-network:
+    driver: bridge

@@ -1,16 +1,13 @@
 services:
   kong:
     image: kong:3.7
+    container_name: kong-api
     restart: on-failure:10
     ports:
-      - 8000:8000
-      - 8443:8443
-      - 8001:8001
-      - 8444:8444
-      - 8002:8002
-      - 8445:8445
-      - 8003:8003
-      - 8004:8004
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
     environment:
       KONG_DATABASE: off
       KONG_DECLARATIVE_CONFIG: /kong/declarative/kong.yaml
@@ -23,4 +20,16 @@ services:
     volumes:
       - ./kong/declarative:/kong/declarative
     extra_hosts:
-      - host.docker.internal:host-gateway
+      - "host.docker.internal:host-gateway"
+    networks:
+      - kong-network
+      - default
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  kong-network:
+    driver: bridge

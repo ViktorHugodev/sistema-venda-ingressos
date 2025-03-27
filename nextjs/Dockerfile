@@ -1,7 +1,12 @@
-FROM node:21-slim
+FROM node:18-alpine
 
 WORKDIR /home/node/app
 
-USER node
+COPY package*.json ./
+RUN npm install
 
-CMD tail -f /dev/null
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
