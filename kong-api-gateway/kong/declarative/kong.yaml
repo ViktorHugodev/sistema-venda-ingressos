@@ -1,0 +1,34 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: golang-api
+    url: http://host.docker.internal:8080
+    routes:
+      - name: golang-api-route
+        paths:
+          - /api/events
+    
+  - name: partner1-api
+    url: http://host.docker.internal:3000
+    routes:
+      - name: partner1-route
+        paths:
+          - /partner1
+        strip_path: true
+    
+  - name: partner2-api
+    url: http://host.docker.internal:3001
+    routes:
+      - name: partner2-route
+        paths:
+          - /partner2
+        strip_path: true
+    
+  - name: nextjs-frontend
+    url: http://host.docker.internal:3002
+    routes:
+      - name: frontend-route
+        paths:
+          - /
+        strip_path: false
