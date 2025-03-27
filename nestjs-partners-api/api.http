@@ -16,7 +16,7 @@ Content-Type: application/json
 @eventId = {{ createEvent.response.body.id }}
 
 ### GET EVENT BY ID
-GET http://localhost:3000/events/{{eventId}}
+GET http://localhost:3000/events/fe3a63bd-cd8f-4b13-b329-161f03f445a5
 
 ### UPDATE EVENT BY ID
 PATCH http://localhost:3000/events/{{eventId}}
