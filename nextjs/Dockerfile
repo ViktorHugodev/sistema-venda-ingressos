@@ -7,6 +7,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+# Porta que o Next.js usará internamente
+EXPOSE 3002
 
-CMD ["npm", "run", "dev"]
+# Usar a porta 3002 explicitamente
+CMD ["npm", "run", "dev", "--", "--port", "3002"]

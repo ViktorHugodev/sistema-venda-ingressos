@@ -12,6 +12,7 @@ type TicketStatus = 'reserved' | 'canceled';
 async function main() {
   // Dados de eventos com nomes e descrições reais
   const eventNames = [
+    // Primeiros 10 eventos originais
     'Tech Innovators Conference',
     'Music Festival',
     'Annual Charity Gala',
@@ -22,9 +23,22 @@ async function main() {
     'Art & Wine Festival',
     'Youth Coding Bootcamp',
     'Gaming Expo',
+
+    // 10 novos eventos
+    'Classical Music Concert',
+    'International Film Festival',
+    'Science & Technology Fair',
+    'Business Leadership Forum',
+    'Comedy Night Showcase',
+    'Regional Football Tournament',
+    'Culinary Masterclass Series',
+    'Photography Workshop',
+    'Summer Dance Festival',
+    'Wellness & Yoga Retreat',
   ];
 
   const eventDescriptions = [
+    // Primeiros 10 descrições originais
     'A gathering for the latest in tech innovations and networking with industry leaders.',
     'A day-long music festival featuring local and international artists across multiple stages.',
     'An elegant evening to support charitable causes, with a silent auction and dinner.',
@@ -35,10 +49,22 @@ async function main() {
     'Celebrate art, wine, and local crafts in this outdoor festival.',
     'An intensive coding workshop for young learners to develop fundamental programming skills.',
     'The latest in gaming tech, demos, and esports competitions all under one roof.',
+
+    // 10 novas descrições
+    'An evening of classical masterpieces performed by the renowned Symphony Orchestra.',
+    'A week-long celebration of cinema featuring award-winning films from around the world.',
+    'Explore cutting-edge innovations and hands-on experiments for all ages.',
+    'Connect with industry leaders and enhance your management and leadership skills.',
+    'A night of laughter featuring top stand-up comedians and improvisational performances.',
+    'Teams from across the region compete in this exciting football championship.',
+    'Learn culinary techniques from world-class chefs in this interactive cooking series.',
+    'Master the art of photography with expert guidance on composition, lighting, and editing.',
+    'Experience diverse dance styles from around the world with performances and workshops.',
+    'A weekend of mindfulness, yoga, and holistic health practices in a serene setting.',
   ];
 
-  // Criar eventos para o Partner 1 (5 eventos)
-  for (let i = 0; i < 5; i++) {
+  // Criar eventos para o Partner 1 (5 eventos originais + 5 novos)
+  for (let i = 0; i < 10; i++) {
     await prisma.event.create({
       data: {
         name: `${eventNames[i]} (Partner 1)`,
@@ -58,8 +84,8 @@ async function main() {
     });
   }
 
-  // Criar eventos para o Partner 2 (5 eventos)
-  for (let i = 5; i < 10; i++) {
+  // Criar eventos para o Partner 2 (5 eventos originais + 5 novos)
+  for (let i = 10; i < 20; i++) {
     await prisma.event.create({
       data: {
         name: `${eventNames[i]} (Partner 2)`,

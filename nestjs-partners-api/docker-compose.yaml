@@ -40,11 +40,13 @@ services:
     networks:
       - partners-network
       - default
+    restart: on-failure
     command: >
-      sh -c "
-        npx prisma generate &&
-        npx prisma migrate deploy &&
-        npx prisma db seed &&
+      bash -c "
+        npm install prisma --save-dev &&
+        npx --no prisma generate &&
+        npx --no prisma migrate deploy &&
+        npx --no prisma db seed || true &&
         npm run start:dev
       "
 

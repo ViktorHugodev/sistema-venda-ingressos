@@ -3,7 +3,7 @@ services:
     build: .
     container_name: sistema-venda-ingressos-nextjs-1
     ports:
-      - "3002:3000"
+      - "3002:3002"  # Mapeie a porta 3002 do host para a porta 3002 do container
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules
@@ -12,7 +12,7 @@ services:
     networks:
       - nextjs-network
       - default
-    command: npm run dev
+    command: npm run dev -- --port 3002  # Especifique a porta 3002 explicitamente
 
 networks:
   nextjs-network:
