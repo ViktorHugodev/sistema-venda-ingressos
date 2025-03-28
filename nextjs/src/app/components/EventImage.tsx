@@ -3,6 +3,7 @@ import Image from 'next/image'
 export type EventImageProps = {
   src: string
   alt: string
+  className?: string
 }
 
 export function EventImage(props: EventImageProps) {
@@ -10,10 +11,10 @@ export function EventImage(props: EventImageProps) {
     <Image
       src={props.src}
       alt={props.alt}
-      width={277}
-      height={277}
+      width={500}
+      height={300}
       priority
-      className='rounded-2xl'
+      className={props.className || 'rounded-lg'}
     />
   )
 }

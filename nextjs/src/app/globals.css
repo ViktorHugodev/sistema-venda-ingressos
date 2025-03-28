@@ -2,23 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --sympla-blue: #00B1E4;
+  --sympla-orange: #F95602;
+  --sympla-coral: #F95602;
+  --sympla-purple: #6236FF;
+  --sympla-pink: #ff5bae;
+  --sympla-background: #FFFFFF;
+  --sympla-background-alt: #F5F5F5;
+  --sympla-dark: #333333;
+  --sympla-dark-gray: #4A4A4A;
+  --sympla-light-gray: #E0E0E0;
+  --sympla-text: #333333;
+  --sympla-text-light: #666666;
+  --sympla-text-muted: #999999;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+  color: var(--sympla-text);
+  background-color: var(--sympla-background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-sympla-blue text-white font-medium py-2.5 px-4 rounded-button hover:bg-opacity-90 transition-all;
+  }
+  
+  .btn-secondary {
+    @apply bg-sympla-orange text-white font-medium py-2.5 px-4 rounded-button hover:bg-opacity-90 transition-all;
+  }
+  
+  .btn-outline {
+    @apply border border-sympla-blue text-sympla-blue font-medium py-2.5 px-4 rounded-button hover:bg-sympla-blue/5 transition-all;
+  }
+  
+  .btn-purple {
+    @apply bg-sympla-purple text-white font-medium py-2.5 px-4 rounded-button hover:bg-opacity-90 transition-all;
+  }
+  
+  .card {
+    @apply bg-white rounded-card shadow-card border border-sympla-light-gray/20 overflow-hidden transition-all hover:shadow-card-hover;
+  }
+  
+  .input {
+    @apply bg-white border border-sympla-light-gray rounded-button px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sympla-blue focus:border-transparent;
+  }
+  
+  .container-sympla {
+    @apply w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .category-icon {
+    @apply flex flex-col items-center justify-center text-center;
+  }
+  
+  .category-icon-circle {
+    @apply w-12 h-12 rounded-full flex items-center justify-center bg-white shadow-card mb-2;
+  }
+  
+  .event-badge {
+    @apply text-xxs font-bold uppercase px-1.5 py-0.5 rounded;
+  }
+  
+  .event-badge-last {
+    @apply bg-sympla-orange/10 text-sympla-orange;
+  }
+  
+  .event-badge-category {
+    @apply bg-sympla-blue/10 text-sympla-blue;
+  }
+  
+  .section-title {
+    @apply text-xl font-bold text-sympla-dark mb-4 flex items-center justify-between;
+  }
+  
+  .section-title-link {
+    @apply text-sm font-medium text-sympla-blue hover:underline;
+  }
+  
+  .event-date {
+    @apply text-xs text-sympla-text-light;
+  }
+  
+  .event-location {
+    @apply text-xs text-sympla-text-light flex items-center;
+  }
+  
+  .event-price {
+    @apply text-sm font-bold text-sympla-dark;
+  }
+  
+  .carousel-indicator {
+    @apply w-2 h-2 rounded-full bg-sympla-light-gray mx-1 inline-block;
+  }
+  
+  .carousel-indicator-active {
+    @apply bg-sympla-orange;
+  }
+}
 
 @layer utilities {
   .text-balance {

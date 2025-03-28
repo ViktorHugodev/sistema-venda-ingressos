@@ -35,12 +35,13 @@ export async function getEvent(eventId: string): Promise<EventModel> {
     // Retornar um modelo de evento padrão em caso de erro
     return {
       id: eventId,
-      name: 'Evento não encontrado',
-      description: 'Não foi possível carregar os detalhes deste evento',
+      name: 'Não foi possível carregar os detalhes deste evento',
       date: new Date().toISOString(),
       price: 0,
-      location: 'Indisponível'
-      // outros campos necessários
+      location: 'Indisponível',
+      organization: 'Indisponível',
+      rating: 'Indisponível',
+      image_url: 'Indisponível',
     }
   }
 }

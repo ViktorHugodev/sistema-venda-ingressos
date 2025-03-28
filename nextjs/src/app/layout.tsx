@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Navbar } from './components/NavBar'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
-  title: 'Venda de Ingressos',
-  description: 'Sistema para venda de ingressos.',
+  title: 'Sympla | Eventos, ingressos e cursos',
+  description: 'Compre ingressos para shows, festivais, teatro, cursos e muito mais!',
 }
 export default function RootLayout({
   children,
@@ -14,14 +15,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
-      <body
-        className={`${inter.className} flex flex-col min-h-screen items-center bg-primary text-default`}
-      >
-        <div className='p-4 md:p-10 w-full max-w-[1256px]'>
-          <Navbar />
+    <html lang='pt-BR'>
+      <body className={`${inter.className} min-h-screen bg-sympla-background text-sympla-text`}>
+        <Header />
+        <main>
           {children}
-        </div>
+        </main>
+        <Footer />
       </body>
     </html>
   )
